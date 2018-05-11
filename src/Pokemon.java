@@ -16,15 +16,17 @@
     public double getHealth(){
         return this.health;
     }
-
-    public String getName(){
-        return this.name;
-    }
+    public double getHappy(){ return this.happyValue; }
+    public double getWeight(){ return this.weight; }
+    public String getName(){ return this.name; }
 
     public void eat(Berry berry){
         this.health += berry.getRestoreValue();
+        this.weight += berry.getRestoreValue();
+        if(this.weight > 100)
+            this.weight = 100;
         if(this.health > this.maxHealth)
-            this.health = this.maxHealth;
+            reducedHealth(berry.getRestoreValue());
     }
 
     public void reducedHealth(double value){

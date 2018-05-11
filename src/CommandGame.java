@@ -88,7 +88,7 @@ public class CommandGame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
-                bg.remove(p3);
+                bg.remove(p4);
                 lab(snivy,"snivy");
             }
         });
@@ -96,7 +96,7 @@ public class CommandGame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
-                bg.remove(p3);
+                bg.remove(p4);
                 lab(tepig,"tepig");
             }
         });
@@ -104,7 +104,7 @@ public class CommandGame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
-                bg.remove(p3);
+                bg.remove(p4);
                 lab(oshawott,"oshawott");
             }
         });
@@ -125,13 +125,25 @@ public class CommandGame extends JFrame {
 
     public void lab(Icon pokemonIcon,String namePokemon){
         this.pokemonIcon = pokemonIcon;
+        JPanel p1 = new JPanel();
+        JPanel p2 = new JPanel();
+        JPanel p3 = new JPanel();
+        JPanel p4 = new JPanel();
+        JPanel p5 = new JPanel();
+        JPanel p6 = new JPanel();
+        JPanel p7 = new JPanel();
+        JPanel p8 = new JPanel();
+        p5.setLayout(new FlowLayout());
+        p6.setLayout(new BoxLayout(p6,BoxLayout.Y_AXIS));
+        p7.setLayout(new FlowLayout());
+        p8.setLayout(new FlowLayout());
         JLabel text = new JLabel("LABORATORY",JLabel.CENTER);
         JLabel iconPokemon = new JLabel(pokemonIcon);
         profile = new JTextArea("",10,10);
         JButton eatButton = new JButton("EAT");
         JButton giveToyButton = new JButton("GIVE TOY");
         JButton evolutionButton = new JButton("EVOLUTION");
-        JButton releaseButton = new JButton("RELEASE");
+        JButton stopButton = new JButton("RELEASE");
         iconPokemon.setIcon(pokemonIcon);
         if(namePokemon.equals("snivy"))
             profile.setText(printProfile(pokemons,0));
@@ -151,11 +163,57 @@ public class CommandGame extends JFrame {
                     eat(2);
             }
         });
+        giveToyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(namePokemon.equals("snivy"))
+                    giveToy(0);
+                else if(namePokemon.equals("tepig"))
+                    giveToy(1);
+                else if(namePokemon.equals("oshawott"))
+                    giveToy(2);
+            }
+        });
+        evolutionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(namePokemon.equals("snivy"))
+                    giveToy(0);
+                else if(namePokemon.equals("tepig"))
+                    giveToy(1);
+                else if(namePokemon.equals("oshawott"))
+                    giveToy(2);
+            }
+        });
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bg.remove(text);
+                bg.remove(p7);
+                bg.remove(p8);
+                selectPokemon();
+            }
+        });
+
+        p1.add(eatButton); p2.add(giveToyButton); p3.add(evolutionButton); p4.add(stopButton);
+        p5.add(p1); p5.add(p2);
+        p6.add(profile); p6.add(p5);
+        p7.add(iconPokemon); p7.add(p6);
+        p8.add(evolutionButton); p8.add(stopButton);
+        bg.add(text,BorderLayout.NORTH);
+        bg.add(p7,BorderLayout.CENTER);
+        bg.add(p8,BorderLayout.SOUTH);
+        c.add(bg);
+
+        setVisible(true);
     }
     public String printProfile(ArrayList<Pokemon> pokemons,int num){
-        String hp = "======== Pokemon List ======== \n"+"Pokemon "+
-                pokemons.get(num).getName()+" health: "+pokemons.get(num).getHealth();
-        return hp;
+        String hp = "======== Pokemon "+ pokemons.get(num).getName()+"======== \n"+" Health: "+pokemons.get(num).getHealth()+
+                "/"+pokemons.get(num).maxHealth;
+        String weight = "\n Weight: "+pokemons.get(num).getWeight()+"/100";
+        String happy = "\n Happy Value: "+pokemons.get(num).getHappy()+"/100 \n"+
+                "===========================================";
+        return hp+weight+happy;
     }
     public void eat(int num){
         Berry berry = new Berry(rand.nextInt(3));
@@ -166,5 +224,8 @@ public class CommandGame extends JFrame {
         ToyPokemon toyPokemon = new ToyPokemon(rand.nextInt(3));
         pokemons.get(num).happy(toyPokemon,num);
         profile.setText(printProfile(pokemons,num));
+    }
+    public void evolution(int num){
+
     }
 }
