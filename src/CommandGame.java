@@ -3,13 +3,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public class CommandGame extends JFrame {
+    ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
     Container c = getContentPane();
     JPanel bg = new JPanel();
-    Icon player;
+    Icon pokemonIcon;
+    JComboBox select;
     public CommandGame(){
         super("POKEMON(demo)");
 
@@ -38,7 +41,7 @@ public class CommandGame extends JFrame {
                 p2.remove(quitButton);
                 c.remove(p1);
                 c.remove(p2);
-                selectGender();
+                selectPokemon();
             }
         });
         quitButton.addActionListener(new ActionListener() {
@@ -58,49 +61,62 @@ public class CommandGame extends JFrame {
 
         setVisible(true);
     }
-    public void selectGender(){
+    public void selectPokemon(){
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
         JPanel p3 = new JPanel();
-        p3.setLayout(new FlowLayout());
-        JLabel text = new JLabel("Select Gender");
-        Icon man = new ImageIcon(getClass().getResource("man.png"));
-        Icon girl = new ImageIcon(getClass().getResource("girl.png"));
-        JButton manButton = new JButton(man);
-        JButton girlButton = new JButton(girl);
-        manButton.setIcon(man);
-        girlButton.setIcon(girl);
+        JPanel p4 = new JPanel();
+        p4.setLayout(new FlowLayout());
+        JLabel text = new JLabel("Select Pokemon",JLabel.CENTER);
+        Icon snivy = new ImageIcon(getClass().getResource("Snivy.png"));
+        Icon tepig = new ImageIcon(getClass().getResource("Tepig.png"));
+        Icon oshawott = new ImageIcon(getClass().getResource("Oshawott.png"));
+        JButton grassButton = new JButton(snivy);
+        JButton fireButton = new JButton(tepig);
+        JButton waterButton = new JButton(oshawott);
+        grassButton.setIcon(snivy);
+        fireButton.setIcon(tepig);
+        waterButton.setIcon(oshawott);
 
-        manButton.addActionListener(new ActionListener() {
+        grassButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p3);
-                wantScene(man);
+                lab(snivy);
             }
         });
-        girlButton.addActionListener(new ActionListener() {
+        fireButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p3);
-                wantScene(girl);
+                lab(tepig);
+            }
+        });
+        waterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bg.remove(text);
+                bg.remove(p3);
+                lab(oshawott);
             }
         });
 
-        text.setHorizontalAlignment ( SwingConstants.CENTER );
-        p3.setBackground(Color.GRAY);
-        p1.add(manButton);
-        p2.add(girlButton);
-        p3.add(p1);
-        p3.add(p2);
+        p4.setBackground(Color.GRAY);
+        p1.add(grassButton);
+        p2.add(fireButton);
+        p3.add(waterButton);
+        p4.add(p1);
+        p4.add(p2);
+        p4.add(p3);
         bg.add(text,BorderLayout.NORTH);
-        bg.add(p3,BorderLayout.CENTER);
+        bg.add(p4,BorderLayout.CENTER);
         c.add(bg);
 
         setVisible(true);
     }
-    public void wantScene(Icon player){
+    /*public void wantScene(Icon player){
         this.player = player;
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
@@ -112,9 +128,28 @@ public class CommandGame extends JFrame {
         JButton shopButton = new JButton("SHOP");
         JButton wildButton = new JButton("WILD");
         JButton farmButton = new JButton("FARM");
-        JLabel dialog = new JLabel(dialogtext);
+        JLabel dialog = new JLabel("");
         dialog.setIcon(dialogtext);
         img.setIcon(player);
+
+        shopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        wildButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        farmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         p1.add(img);
         p3.add(shopButton);
@@ -127,5 +162,13 @@ public class CommandGame extends JFrame {
         c.add(bg);
 
         setVisible(true);
+    }*/
+    public void lab(Icon pokemonIcon){
+        this.pokemonIcon = pokemonIcon;
+        JLabel text = new JLabel("LABORATORY",JLabel.CENTER);
+        JLabel iconPokemon = new JLabel(pokemonIcon);
+
+
+
     }
 }
