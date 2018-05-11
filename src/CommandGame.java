@@ -11,12 +11,17 @@ public class CommandGame extends JFrame {
     ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
     Container c = getContentPane();
     JPanel bg = new JPanel();
+    JTextArea profile;
     Icon pokemonIcon;
     public CommandGame(){
         super("POKEMON(demo)");
 
         //c.setLayout(new BorderLayout());
         bg.setLayout(new BorderLayout());
+
+        pokemons.add(new Snivy());
+        pokemons.add(new Tepig());
+        pokemons.add(new Oshawott());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200,700);
@@ -82,7 +87,7 @@ public class CommandGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p3);
-                lab(snivy);
+                lab(snivy,"snivy");
             }
         });
         fireButton.addActionListener(new ActionListener() {
@@ -90,7 +95,7 @@ public class CommandGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p3);
-                lab(tepig);
+                lab(tepig,"tepig");
             }
         });
         waterButton.addActionListener(new ActionListener() {
@@ -98,7 +103,7 @@ public class CommandGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p3);
-                lab(oshawott);
+                lab(oshawott,"oshawott");
             }
         });
 
@@ -116,16 +121,43 @@ public class CommandGame extends JFrame {
         setVisible(true);
     }
 
-    public void lab(Icon pokemonIcon){
+    public void lab(Icon pokemonIcon,String namePokemon){
         this.pokemonIcon = pokemonIcon;
         JLabel text = new JLabel("LABORATORY",JLabel.CENTER);
         JLabel iconPokemon = new JLabel(pokemonIcon);
-        JTextArea detail = new JTextArea("",10,10);
+        profile = new JTextArea("",10,10);
         JButton eatButton = new JButton("EAT");
         JButton takeCareButton = new JButton("TAKE CARE");
         JButton evolutionButton = new JButton("EVOLUTION");
         JButton releaseButton = new JButton("RELEASE");
         iconPokemon.setIcon(pokemonIcon);
+        if(namePokemon.equals("snivy"))
+            profile.setText(printProfile(pokemons,0));
+        else if(namePokemon.equals("tepig"))
+            profile.setText(printProfile(pokemons,1));
+        else if(namePokemon.equals("oshawott"))
+            profile.setText(printProfile(pokemons,2));
 
+        eatButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(namePokemon.equals("snivy"))
+                    eat(0);
+                else if(namePokemon.equals("tepig"))
+                    eat(1);
+                else if(namePokemon.equals("oshawott"))
+                    eat(2);
+            }
+        });
+    }
+    public String printProfile(ArrayList<Pokemon> pokemons,int num){
+        String hp = "======== Pokemon List ======== \n"+"Pokemon "+
+                pokemons.get(num).getName()+" health: "+pokemons.get(num).getHealth();
+        return hp;
+    }
+    public void eat(int num){
+        Berry berry = new Berry(0);
+        pokemons.get(num).eat(berry);
+        profile.setText(printProfile(pokemons,num));
     }
 }
