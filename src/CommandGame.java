@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -13,6 +14,7 @@ public class CommandGame extends JFrame {
     JPanel bg = new JPanel();
     JTextArea profile;
     Icon pokemonIcon;
+    Random rand = new Random();
     public CommandGame(){
         super("POKEMON(demo)");
 
@@ -127,7 +129,7 @@ public class CommandGame extends JFrame {
         JLabel iconPokemon = new JLabel(pokemonIcon);
         profile = new JTextArea("",10,10);
         JButton eatButton = new JButton("EAT");
-        JButton takeCareButton = new JButton("TAKE CARE");
+        JButton giveToyButton = new JButton("GIVE TOY");
         JButton evolutionButton = new JButton("EVOLUTION");
         JButton releaseButton = new JButton("RELEASE");
         iconPokemon.setIcon(pokemonIcon);
@@ -156,8 +158,13 @@ public class CommandGame extends JFrame {
         return hp;
     }
     public void eat(int num){
-        Berry berry = new Berry(0);
+        Berry berry = new Berry(rand.nextInt(3));
         pokemons.get(num).eat(berry);
+        profile.setText(printProfile(pokemons,num));
+    }
+    public void giveToy(int num){
+        ToyPokemon toyPokemon = new ToyPokemon(rand.nextInt(3));
+        pokemons.get(num).happy(toyPokemon,num);
         profile.setText(printProfile(pokemons,num));
     }
 }
