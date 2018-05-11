@@ -12,7 +12,6 @@ public class CommandGame extends JFrame {
     Container c = getContentPane();
     JPanel bg = new JPanel();
     Icon pokemonIcon;
-    JComboBox select;
     public CommandGame(){
         super("POKEMON(demo)");
 
@@ -116,59 +115,17 @@ public class CommandGame extends JFrame {
 
         setVisible(true);
     }
-    /*public void wantScene(Icon player){
-        this.player = player;
-        JPanel p1 = new JPanel();
-        JPanel p2 = new JPanel();
-        JPanel p3 = new JPanel();
-        JLabel img = new JLabel(player);
-        p2.setLayout(new FlowLayout());
-        p3.setLayout(new BoxLayout(p3,BoxLayout.Y_AXIS));
-        Icon dialogtext = new ImageIcon(getClass().getResource(""));
-        JButton shopButton = new JButton("SHOP");
-        JButton wildButton = new JButton("WILD");
-        JButton farmButton = new JButton("FARM");
-        JLabel dialog = new JLabel("");
-        dialog.setIcon(dialogtext);
-        img.setIcon(player);
 
-        shopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        wildButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        farmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        p1.add(img);
-        p3.add(shopButton);
-        p3.add(wildButton);
-        p3.add(farmButton);
-        p2.add(p1);
-        p2.add(p3);
-        bg.add(p2, BorderLayout.CENTER);
-        bg.add(dialog,BorderLayout.SOUTH);
-        c.add(bg);
-
-        setVisible(true);
-    }*/
     public void lab(Icon pokemonIcon){
         this.pokemonIcon = pokemonIcon;
         JLabel text = new JLabel("LABORATORY",JLabel.CENTER);
         JLabel iconPokemon = new JLabel(pokemonIcon);
-
-
+        JTextArea detail = new JTextArea("",10,10);
+        JButton eatButton = new JButton("EAT");
+        JButton takeCareButton = new JButton("TAKE CARE");
+        JButton evolutionButton = new JButton("EVOLUTION");
+        JButton releaseButton = new JButton("RELEASE");
+        iconPokemon.setIcon(pokemonIcon);
 
     }
 }

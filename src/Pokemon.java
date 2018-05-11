@@ -1,4 +1,4 @@
-abstract class Pokemon{
+ class Pokemon{
     public final double maxHealth;
     protected double health;
     protected String name;
@@ -33,6 +33,6 @@ abstract class Pokemon{
             this.health = 0;
     }
 
-    abstract public void move();
+    //abstract public void move();
 
 }
