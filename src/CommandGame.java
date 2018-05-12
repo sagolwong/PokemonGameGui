@@ -72,6 +72,7 @@ public class CommandGame extends JFrame {
         JPanel p2 = new JPanel();
         JPanel p3 = new JPanel();
         JPanel p4 = new JPanel();
+        JPanel p5 = new JPanel();
         p4.setLayout(new FlowLayout());
         JLabel text = new JLabel("Select Pokemon",JLabel.CENTER);
         Icon snivy = new ImageIcon(getClass().getResource("Snivy.png"));
@@ -80,6 +81,7 @@ public class CommandGame extends JFrame {
         JButton grassButton = new JButton(snivy);
         JButton fireButton = new JButton(tepig);
         JButton waterButton = new JButton(oshawott);
+        JButton quitButton = new JButton("QUIT");
         grassButton.setIcon(snivy);
         fireButton.setIcon(tepig);
         waterButton.setIcon(oshawott);
@@ -89,6 +91,7 @@ public class CommandGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p4);
+                bg.remove(p5);
                 lab(snivy,"snivy");
             }
         });
@@ -97,6 +100,7 @@ public class CommandGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p4);
+                bg.remove(p5);
                 lab(tepig,"tepig");
             }
         });
@@ -105,7 +109,15 @@ public class CommandGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 bg.remove(text);
                 bg.remove(p4);
+                bg.remove(p5);
                 lab(oshawott,"oshawott");
+            }
+        });
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
             }
         });
 
@@ -116,8 +128,10 @@ public class CommandGame extends JFrame {
         p4.add(p1);
         p4.add(p2);
         p4.add(p3);
+        p5.add(quitButton);
         bg.add(text,BorderLayout.NORTH);
         bg.add(p4,BorderLayout.CENTER);
+        bg.add(p5,BorderLayout.SOUTH);
         c.add(bg);
 
         setVisible(true);
