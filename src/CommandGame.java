@@ -139,11 +139,11 @@ public class CommandGame extends JFrame {
         p8.setLayout(new FlowLayout());
         JLabel text = new JLabel("LABORATORY",JLabel.CENTER);
         JLabel iconPokemon = new JLabel(pokemonIcon);
-        profile = new JTextArea("",10,10);
+        profile = new JTextArea("",10,6);
         JButton eatButton = new JButton("EAT");
         JButton giveToyButton = new JButton("GIVE TOY");
         JButton evolutionButton = new JButton("EVOLUTION");
-        JButton stopButton = new JButton("RELEASE");
+        JButton stopButton = new JButton("STOP");
         iconPokemon.setIcon(pokemonIcon);
         if(namePokemon.equals("snivy"))
             profile.setText(printProfile(pokemons,0));
@@ -177,12 +177,19 @@ public class CommandGame extends JFrame {
         evolutionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int check = 4;
                 if(namePokemon.equals("snivy"))
-                    giveToy(0);
+                   check = evolution(0);
                 else if(namePokemon.equals("tepig"))
-                    giveToy(1);
+                    check = evolution(1);
                 else if(namePokemon.equals("oshawott"))
-                    giveToy(2);
+                    check = evolution(2);
+                if((check>=0)&&(check<3)){
+                    bg.remove(text);
+                    bg.remove(p7);
+                    bg.remove(p8);
+                    evolutionScene(check);
+                }
             }
         });
         stopButton.addActionListener(new ActionListener() {
@@ -208,11 +215,11 @@ public class CommandGame extends JFrame {
         setVisible(true);
     }
     public String printProfile(ArrayList<Pokemon> pokemons,int num){
-        String hp = "======== Pokemon "+ pokemons.get(num).getName()+"======== \n"+" Health: "+pokemons.get(num).getHealth()+
+        String hp = " ======== Pokemon "+ pokemons.get(num).getName()+"======== \n"+"  Health: "+pokemons.get(num).getHealth()+
                 "/"+pokemons.get(num).maxHealth;
-        String weight = "\n Weight: "+pokemons.get(num).getWeight()+"/100";
-        String happy = "\n Happy Value: "+pokemons.get(num).getHappy()+"/100 \n"+
-                "===========================================";
+        String weight = "\n  Weight: "+pokemons.get(num).getWeight()+"/100.0";
+        String happy = "\n  Happy Value: "+pokemons.get(num).getHappy()+"/100.0 \n"+
+                " ============================";
         return hp+weight+happy;
     }
     public void eat(int num){
@@ -225,7 +232,44 @@ public class CommandGame extends JFrame {
         pokemons.get(num).happy(toyPokemon,num);
         profile.setText(printProfile(pokemons,num));
     }
-    public void evolution(int num){
+    public int evolution(int num){
+        if((pokemons.get(num).getHappy()==100)&&(pokemons.get(num).getWeight()==100))
+            return num;
+        return 4;
+    }
+    public void evolutionScene(int num){
+        JPanel p1 = new JPanel();
+        JLabel text = new JLabel("CONGRATULATIONS",JLabel.CENTER);
+        Icon servine = new ImageIcon(getClass().getResource("Servine.png"));
+        Icon pignite = new ImageIcon(getClass().getResource("Pignite.png"));
+        Icon dewott = new ImageIcon(getClass().getResource("Dewott.png"));
+        JButton keepButton = new JButton("KEEP");
+        JLabel icon = new JLabel("",JLabel.CENTER);
 
+        if(num == 0)
+            icon.setIcon(servine);
+        else if(num == 1)
+            icon.setIcon(pignite);
+        else if(num == 2)
+            icon.setIcon(dewott);
+
+        keepButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bg.remove(text);
+                bg.remove(icon);
+                bg.remove(p1);
+                selectPokemon();
+            }
+        });
+
+
+        p1.add(keepButton);
+        bg.add(text,BorderLayout.NORTH);
+        bg.add(icon,BorderLayout.CENTER);
+        bg.add(p1,BorderLayout.SOUTH);
+        c.add(bg);
+
+        setVisible(true);
     }
 }
