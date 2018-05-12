@@ -16,7 +16,7 @@ public class CommandGame extends JFrame {
     Icon pokemonIcon;
     Random rand = new Random();
     public CommandGame(){
-        super("POKEMON(demo)");
+        super("POKEMON LABORATORY");
 
         //c.setLayout(new BorderLayout());
         bg.setLayout(new BorderLayout());
@@ -26,7 +26,7 @@ public class CommandGame extends JFrame {
         pokemons.add(new Oshawott());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200,700);
+        setSize(700,500);
         setVisible(true);
     }
     public void startGame(){
@@ -35,7 +35,7 @@ public class CommandGame extends JFrame {
        // p2.setLayout( new BoxLayout(p2, BoxLayout.Y_AXIS) );
         JButton startButton = new JButton("START");
         JButton quitButton = new JButton("QUIT");
-        Icon logo = new ImageIcon(getClass().getResource("logo.png"));
+        Icon logo = new ImageIcon(getClass().getResource("logostart.png"));
         JLabel logoIcon = new JLabel("");
         logoIcon.setIcon(logo);
 
@@ -74,10 +74,11 @@ public class CommandGame extends JFrame {
         JPanel p4 = new JPanel();
         JPanel p5 = new JPanel();
         p4.setLayout(new FlowLayout());
-        JLabel text = new JLabel("Select Pokemon",JLabel.CENTER);
+        Icon head = new ImageIcon(getClass().getResource("header1.png"));
         Icon snivy = new ImageIcon(getClass().getResource("Snivy.png"));
         Icon tepig = new ImageIcon(getClass().getResource("Tepig.png"));
         Icon oshawott = new ImageIcon(getClass().getResource("Oshawott.png"));
+        JLabel header = new JLabel(head,JLabel.CENTER);
         JButton grassButton = new JButton(snivy);
         JButton fireButton = new JButton(tepig);
         JButton waterButton = new JButton(oshawott);
@@ -89,27 +90,27 @@ public class CommandGame extends JFrame {
         grassButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(text);
-                bg.remove(p4);
                 bg.remove(p5);
+                bg.remove(p4);
+                bg.remove(quitButton);
                 lab(snivy,"snivy");
             }
         });
         fireButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(text);
-                bg.remove(p4);
                 bg.remove(p5);
+                bg.remove(p4);
+                bg.remove(quitButton);
                 lab(tepig,"tepig");
             }
         });
         waterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(text);
-                bg.remove(p4);
                 bg.remove(p5);
+                bg.remove(p4);
+                bg.remove(quitButton);
                 lab(oshawott,"oshawott");
             }
         });
@@ -121,19 +122,20 @@ public class CommandGame extends JFrame {
             }
         });
 
-        p4.setBackground(Color.GRAY);
+
         p1.add(grassButton);
         p2.add(fireButton);
         p3.add(waterButton);
         p4.add(p1);
         p4.add(p2);
         p4.add(p3);
-        p5.add(quitButton);
-        bg.add(text,BorderLayout.NORTH);
+        p5.add(header);
+        bg.add(p5,BorderLayout.NORTH);
         bg.add(p4,BorderLayout.CENTER);
-        bg.add(p5,BorderLayout.SOUTH);
+        bg.add(quitButton,BorderLayout.SOUTH);
         c.add(bg);
 
+        pack();
         setVisible(true);
     }
 
@@ -147,17 +149,19 @@ public class CommandGame extends JFrame {
         JPanel p6 = new JPanel();
         JPanel p7 = new JPanel();
         JPanel p8 = new JPanel();
+        JPanel p9 = new JPanel();
         p5.setLayout(new FlowLayout());
         p6.setLayout(new BoxLayout(p6,BoxLayout.Y_AXIS));
         p7.setLayout(new FlowLayout());
         p8.setLayout(new FlowLayout());
-        JLabel text = new JLabel("LABORATORY",JLabel.CENTER);
+        Icon head = new ImageIcon(getClass().getResource("header2.png"));
+        JLabel header = new JLabel(head);
         JLabel iconPokemon = new JLabel(pokemonIcon);
         profile = new JTextArea("",10,6);
         JButton eatButton = new JButton("EAT");
         JButton giveToyButton = new JButton("GIVE TOY");
         JButton evolutionButton = new JButton("EVOLUTION");
-        JButton stopButton = new JButton("STOP");
+        JButton backButton = new JButton("BACK");
         iconPokemon.setIcon(pokemonIcon);
         if(namePokemon.equals("snivy"))
             profile.setText(printProfile(pokemons,0));
@@ -199,37 +203,39 @@ public class CommandGame extends JFrame {
                 else if(namePokemon.equals("oshawott"))
                     check = evolution(2);
                 if((check>=0)&&(check<3)){
-                    bg.remove(text);
+                    bg.remove(p9);
                     bg.remove(p7);
                     bg.remove(p8);
                     evolutionScene(check);
                 }
             }
         });
-        stopButton.addActionListener(new ActionListener() {
+        backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(text);
+                bg.remove(p9);
                 bg.remove(p7);
                 bg.remove(p8);
                 selectPokemon();
             }
         });
 
-        p1.add(eatButton); p2.add(giveToyButton); p3.add(evolutionButton); p4.add(stopButton);
+        p1.add(eatButton); p2.add(giveToyButton); p3.add(evolutionButton); p4.add(backButton);
         p5.add(p1); p5.add(p2);
         p6.add(profile); p6.add(p5);
         p7.add(iconPokemon); p7.add(p6);
-        p8.add(evolutionButton); p8.add(stopButton);
-        bg.add(text,BorderLayout.NORTH);
+        p8.add(evolutionButton); p8.add(backButton);
+        p9.add(header);
+        bg.add(p9,BorderLayout.NORTH);
         bg.add(p7,BorderLayout.CENTER);
         bg.add(p8,BorderLayout.SOUTH);
         c.add(bg);
+        pack();
 
         setVisible(true);
     }
     public String printProfile(ArrayList<Pokemon> pokemons,int num){
-        String hp = " ======== Pokemon "+ pokemons.get(num).getName()+"======== \n"+"  Health: "+pokemons.get(num).getHealth()+
+        String hp = " ======== Pokemon " + pokemons.get(num).getName()+ "======== \n"+"  Health: "+pokemons.get(num).getHealth()+
                 "/"+pokemons.get(num).maxHealth;
         String weight = "\n  Weight: "+pokemons.get(num).getWeight()+"/100.0";
         String happy = "\n  Happy Value: "+pokemons.get(num).getHappy()+"/100.0 \n"+
@@ -253,10 +259,12 @@ public class CommandGame extends JFrame {
     }
     public void evolutionScene(int num){
         JPanel p1 = new JPanel();
-        JLabel text = new JLabel("CONGRATULATIONS",JLabel.CENTER);
+        JPanel p2 = new JPanel();
+        Icon head = new ImageIcon(getClass().getResource("header3.png"));
         Icon servine = new ImageIcon(getClass().getResource("Servine.png"));
         Icon pignite = new ImageIcon(getClass().getResource("Pignite.png"));
         Icon dewott = new ImageIcon(getClass().getResource("Dewott.png"));
+        JLabel header = new JLabel(head,JLabel.CENTER);
         JButton keepButton = new JButton("KEEP");
         JLabel icon = new JLabel("",JLabel.CENTER);
 
@@ -270,7 +278,7 @@ public class CommandGame extends JFrame {
         keepButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(text);
+                bg.remove(p2);
                 bg.remove(icon);
                 bg.remove(p1);
                 selectPokemon();
@@ -279,7 +287,8 @@ public class CommandGame extends JFrame {
 
 
         p1.add(keepButton);
-        bg.add(text,BorderLayout.NORTH);
+        p2.add(header);
+        bg.add(p2,BorderLayout.NORTH);
         bg.add(icon,BorderLayout.CENTER);
         bg.add(p1,BorderLayout.SOUTH);
         c.add(bg);
