@@ -15,6 +15,9 @@ public class CommandGame extends JFrame {
     JTextArea profile;
     Icon pokemonIcon;
     Random rand = new Random();
+    boolean checkUnlock1 = false;
+    boolean checkUnlock2 = false;
+    boolean checkUnlock3 = false;
     public CommandGame(){
         super("POKEMON LABORATORY");
 
@@ -47,7 +50,7 @@ public class CommandGame extends JFrame {
                 p2.remove(quitButton);
                 c.remove(p1);
                 c.remove(p2);
-                selectPokemon();
+                selectPokemon(4);
             }
         });
         quitButton.addActionListener(new ActionListener() {
@@ -67,7 +70,7 @@ public class CommandGame extends JFrame {
 
         setVisible(true);
     }
-    public void selectPokemon(){
+    public void selectPokemon(int unlock){
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
         JPanel p3 = new JPanel();
@@ -78,6 +81,9 @@ public class CommandGame extends JFrame {
         Icon snivy = new ImageIcon(getClass().getResource("Snivy.png"));
         Icon tepig = new ImageIcon(getClass().getResource("Tepig.png"));
         Icon oshawott = new ImageIcon(getClass().getResource("Oshawott.png"));
+        Icon servine = new ImageIcon(getClass().getResource("Servine.png"));
+        Icon pignite = new ImageIcon(getClass().getResource("Pignite.png"));
+        Icon dewott = new ImageIcon(getClass().getResource("Dewott.png"));
         JLabel header = new JLabel(head,JLabel.CENTER);
         JButton grassButton = new JButton(snivy);
         JButton fireButton = new JButton(tepig);
@@ -86,6 +92,18 @@ public class CommandGame extends JFrame {
         grassButton.setIcon(snivy);
         fireButton.setIcon(tepig);
         waterButton.setIcon(oshawott);
+        if(unlock == 0 || checkUnlock1){
+            grassButton.setIcon(servine);
+            checkUnlock1 = true;
+        }
+        if(unlock == 1 || checkUnlock2){
+            fireButton.setIcon(pignite);
+            checkUnlock2 = true;
+        }
+        if(unlock == 2 || checkUnlock3){
+            waterButton.setIcon(dewott);
+            checkUnlock3 = true;
+        }
 
         grassButton.addActionListener(new ActionListener() {
             @Override
@@ -93,7 +111,7 @@ public class CommandGame extends JFrame {
                 bg.remove(p5);
                 bg.remove(p4);
                 bg.remove(quitButton);
-                lab(snivy,"snivy");
+                lab(snivy,"snivy",unlock);
             }
         });
         fireButton.addActionListener(new ActionListener() {
@@ -102,7 +120,7 @@ public class CommandGame extends JFrame {
                 bg.remove(p5);
                 bg.remove(p4);
                 bg.remove(quitButton);
-                lab(tepig,"tepig");
+                lab(tepig,"tepig",unlock);
             }
         });
         waterButton.addActionListener(new ActionListener() {
@@ -111,7 +129,7 @@ public class CommandGame extends JFrame {
                 bg.remove(p5);
                 bg.remove(p4);
                 bg.remove(quitButton);
-                lab(oshawott,"oshawott");
+                lab(oshawott,"oshawott",unlock);
             }
         });
         quitButton.addActionListener(new ActionListener() {
@@ -139,7 +157,7 @@ public class CommandGame extends JFrame {
         setVisible(true);
     }
 
-    public void lab(Icon pokemonIcon,String namePokemon){
+    public void lab(Icon pokemonIcon,String namePokemon,int unlock){
         this.pokemonIcon = pokemonIcon;
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel();
@@ -216,7 +234,7 @@ public class CommandGame extends JFrame {
                 bg.remove(p9);
                 bg.remove(p7);
                 bg.remove(p8);
-                selectPokemon();
+                selectPokemon(unlock);
             }
         });
 
@@ -239,7 +257,7 @@ public class CommandGame extends JFrame {
                 "/"+pokemons.get(num).maxHealth;
         String weight = "\n  Weight: "+pokemons.get(num).getWeight()+"/100.0";
         String happy = "\n  Happy Value: "+pokemons.get(num).getHappy()+"/100.0 \n"+
-                " ============================";
+                " =============================";
         return hp+weight+happy;
     }
     public void eat(int num){
@@ -281,7 +299,7 @@ public class CommandGame extends JFrame {
                 bg.remove(p2);
                 bg.remove(icon);
                 bg.remove(p1);
-                selectPokemon();
+                selectPokemon(num);
             }
         });
 
