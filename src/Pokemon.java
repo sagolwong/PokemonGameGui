@@ -1,16 +1,20 @@
  class Pokemon{
     public final double maxHealth;
+    public final double maxHappy;
+    public final double maxWeight;
     protected int health;
     protected int happyValue;
     protected int weight;
     protected String name;
 
-    public Pokemon(String name, double maxHealth, double happyValue, double weight){
+    public Pokemon(String name, double maxHealth, double happyValue, double weight,int maxHappy,int maxWeight){
         this.name = name;
         this.health = (int)maxHealth;
         this.maxHealth = (int)maxHealth;
         this.happyValue = (int)happyValue;
+        this.maxHappy = maxHappy;
         this.weight = (int)weight;
+        this.maxWeight = maxWeight;
     }
 
     public double getHealth(){
@@ -23,8 +27,8 @@
     public void eat(Berry berry){
         this.health += berry.getRestoreValue();
         this.weight += berry.getRestoreValue();
-        if(this.weight > 100)
-            this.weight = 100;
+        if(this.weight > maxWeight)
+            this.weight = (int)maxWeight;
         if(this.health > this.maxHealth)
             reducedHealth(berry.getRestoreValue());
     }
@@ -42,8 +46,8 @@
         if(num == 2 && toyPokemon.getName().equals("Ball"))
             reducedHappy(13);
         this.happyValue += toyPokemon.getHappyValue();
-        if(happyValue > 100)
-            this.happyValue = 100;
+        if(happyValue > maxHappy)
+            this.happyValue = (int)maxHappy;
 
     }
     public void reducedHappy(int value){

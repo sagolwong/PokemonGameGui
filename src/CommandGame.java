@@ -18,6 +18,9 @@ public class CommandGame extends JFrame {
     boolean checkUnlock1 = false;
     boolean checkUnlock2 = false;
     boolean checkUnlock3 = false;
+    boolean checkUnlock4 = false;
+    boolean checkUnlock5 = false;
+    boolean checkUnlock6 = false;
     public CommandGame(){
         super("POKEMON LABORATORY");
 
@@ -27,6 +30,9 @@ public class CommandGame extends JFrame {
         pokemons.add(new Snivy());
         pokemons.add(new Tepig());
         pokemons.add(new Oshawott());
+        pokemons.add(new Servine());
+        pokemons.add(new Pignite());
+        pokemons.add(new Dewott());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700,500);
@@ -50,7 +56,7 @@ public class CommandGame extends JFrame {
                 p2.remove(quitButton);
                 c.remove(p1);
                 c.remove(p2);
-                selectPokemon(4);
+                selectPokemon(7);
             }
         });
         quitButton.addActionListener(new ActionListener() {
@@ -84,6 +90,9 @@ public class CommandGame extends JFrame {
         Icon servine = new ImageIcon(getClass().getResource("Servine.png"));
         Icon pignite = new ImageIcon(getClass().getResource("Pignite.png"));
         Icon dewott = new ImageIcon(getClass().getResource("Dewott.png"));
+        Icon serperior = new ImageIcon(getClass().getResource("Serperior.png"));
+        Icon emboar = new ImageIcon(getClass().getResource("Emboar.png"));
+        Icon samurott = new ImageIcon(getClass().getResource("Samurott.png"));
         JLabel header = new JLabel(head,JLabel.CENTER);
         JButton grassButton = new JButton(snivy);
         JButton fireButton = new JButton(tepig);
@@ -104,32 +113,59 @@ public class CommandGame extends JFrame {
             waterButton.setIcon(dewott);
             checkUnlock3 = true;
         }
+        if(unlock == 3 || checkUnlock4){
+            grassButton.setIcon(serperior);
+            checkUnlock4 = true;
+        }
+        if(unlock == 4 || checkUnlock5){
+            fireButton.setIcon(emboar);
+            checkUnlock5 = true;
+        }
+        if(unlock == 5 || checkUnlock6){
+            waterButton.setIcon(samurott);
+            checkUnlock6 = true;
+        }
 
         grassButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(p5);
-                bg.remove(p4);
-                bg.remove(quitButton);
-                lab(snivy,"snivy",unlock);
+                if(!checkUnlock4){
+                    bg.remove(p5);
+                    bg.remove(p4);
+                    bg.remove(quitButton);
+                    if(checkUnlock1)
+                        lab(servine,"servine",unlock);
+                    else if(!checkUnlock1)
+                        lab(snivy,"snivy",unlock);
+                }
             }
         });
         fireButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                bg.remove(p5);
-                bg.remove(p4);
-                bg.remove(quitButton);
-                lab(tepig,"tepig",unlock);
+            public void actionPerformed(ActionEvent e){
+                if(!checkUnlock5){
+                    bg.remove(p5);
+                    bg.remove(p4);
+                    bg.remove(quitButton);
+                    if (checkUnlock2)
+                        lab(pignite, "pignite", unlock);
+                    else if (!checkUnlock2)
+                        lab(tepig, "tepig", unlock);
+                }
             }
         });
         waterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bg.remove(p5);
-                bg.remove(p4);
-                bg.remove(quitButton);
-                lab(oshawott,"oshawott",unlock);
+                if(!checkUnlock6){
+                    bg.remove(p5);
+                    bg.remove(p4);
+                    bg.remove(quitButton);
+                    if (checkUnlock3)
+                        lab(dewott, "dewott", unlock);
+                    else if (!checkUnlock3)
+                        lab(oshawott, "oshawott", unlock);
+                }
             }
         });
         quitButton.addActionListener(new ActionListener() {
@@ -187,6 +223,12 @@ public class CommandGame extends JFrame {
             profile.setText(printProfile(pokemons,1));
         else if(namePokemon.equals("oshawott"))
             profile.setText(printProfile(pokemons,2));
+        else if(namePokemon.equals("servine"))
+            profile.setText(printProfile(pokemons,3));
+        else if(namePokemon.equals("pignite"))
+            profile.setText(printProfile(pokemons,4));
+        else if(namePokemon.equals("dewott"))
+            profile.setText(printProfile(pokemons,5));
 
         eatButton.addActionListener(new ActionListener() {
             @Override
@@ -197,6 +239,12 @@ public class CommandGame extends JFrame {
                     eat(1);
                 else if(namePokemon.equals("oshawott"))
                     eat(2);
+                else if(namePokemon.equals("servine"))
+                    eat(3);
+                else if(namePokemon.equals("pignite"))
+                    eat(4);
+                else if(namePokemon.equals("dewott"))
+                    eat(5);
             }
         });
         giveToyButton.addActionListener(new ActionListener() {
@@ -208,19 +256,32 @@ public class CommandGame extends JFrame {
                     giveToy(1);
                 else if(namePokemon.equals("oshawott"))
                     giveToy(2);
+                else if(namePokemon.equals("servine"))
+                    giveToy(3);
+                else if(namePokemon.equals("pignite"))
+                    giveToy(4);
+                else if(namePokemon.equals("dewott"))
+                    giveToy(5);
+
             }
         });
         evolutionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int check = 4;
+                int check = 6;
                 if(namePokemon.equals("snivy"))
                    check = evolution(0);
                 else if(namePokemon.equals("tepig"))
                     check = evolution(1);
                 else if(namePokemon.equals("oshawott"))
                     check = evolution(2);
-                if((check>=0)&&(check<3)){
+                else if(namePokemon.equals("servine"))
+                    check = evolution(3);
+                else if(namePokemon.equals("pignite"))
+                    check = evolution(4);
+                else if(namePokemon.equals("dewott"))
+                    check = evolution(5);
+                if((check>=0)&&(check<6)){
                     bg.remove(p9);
                     bg.remove(p7);
                     bg.remove(p8);
@@ -253,11 +314,11 @@ public class CommandGame extends JFrame {
         setVisible(true);
     }
     public String printProfile(ArrayList<Pokemon> pokemons,int num){
-        String hp = " ======== Pokemon " + pokemons.get(num).getName()+ "======== \n"+"  Health: "+pokemons.get(num).getHealth()+
+        String hp = " ======== Pokemon " + pokemons.get(num).getName()+ " ======== \n"+"  Health: "+pokemons.get(num).getHealth()+
                 "/"+pokemons.get(num).maxHealth;
-        String weight = "\n  Weight: "+pokemons.get(num).getWeight()+"/100.0";
-        String happy = "\n  Happy Value: "+pokemons.get(num).getHappy()+"/100.0 \n"+
-                " =============================";
+        String weight = "\n  Weight: "+pokemons.get(num).getWeight()+"/"+pokemons.get(num).maxWeight;
+        String happy = "\n  Happy Value: "+pokemons.get(num).getHappy()+"/"+pokemons.get(num).maxHappy+
+                "\n ==============================";
         return hp+weight+happy;
     }
     public void eat(int num){
@@ -273,7 +334,9 @@ public class CommandGame extends JFrame {
     public int evolution(int num){
         if((pokemons.get(num).getHappy()==100)&&(pokemons.get(num).getWeight()==100))
             return num;
-        return 4;
+        if((pokemons.get(num).getHappy()==200)&&(pokemons.get(num).getWeight()==200))
+            return num;
+        return 6;
     }
     public void evolutionScene(int num){
         JPanel p1 = new JPanel();
@@ -282,6 +345,9 @@ public class CommandGame extends JFrame {
         Icon servine = new ImageIcon(getClass().getResource("Servine.png"));
         Icon pignite = new ImageIcon(getClass().getResource("Pignite.png"));
         Icon dewott = new ImageIcon(getClass().getResource("Dewott.png"));
+        Icon serperior = new ImageIcon(getClass().getResource("Serperior.png"));
+        Icon emboar = new ImageIcon(getClass().getResource("Emboar.png"));
+        Icon samurott = new ImageIcon(getClass().getResource("Samurott.png"));
         JLabel header = new JLabel(head,JLabel.CENTER);
         JButton keepButton = new JButton("KEEP");
         JLabel icon = new JLabel("",JLabel.CENTER);
@@ -292,6 +358,12 @@ public class CommandGame extends JFrame {
             icon.setIcon(pignite);
         else if(num == 2)
             icon.setIcon(dewott);
+        else if(num == 3)
+            icon.setIcon(serperior);
+        else if(num == 4)
+            icon.setIcon(emboar);
+        else if(num == 5)
+            icon.setIcon(samurott);
 
         keepButton.addActionListener(new ActionListener() {
             @Override
